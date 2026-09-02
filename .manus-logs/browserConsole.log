@@ -162,3 +162,7 @@
 [2026-09-02T21:45:47.032Z] {"timestamp":1788385544829,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
 [2026-09-02T21:45:47.032Z] {"timestamp":1788385545837,"level":"DEBUG","args":["[vite] connected."],"stack":null}
 [2026-09-02T21:46:01.557Z] {"timestamp":1788385557651,"level":"WARN","args":["Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}."],"stack":null}
+[2026-09-02T21:49:55.193Z] {"timestamp":1788385792975,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T21:49:55.193Z] {"timestamp":1788385793983,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-09-02T21:50:24.717Z] {"timestamp":1788385821768,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T21:50:24.717Z] {"timestamp":1788385822632,"level":"DEBUG","args":["[vite] connected."],"stack":null}
