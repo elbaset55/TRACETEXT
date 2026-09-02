@@ -13,6 +13,8 @@ import {
   Trash2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { QRCodeButton } from "@/components/QRCodeDisplay";
+import QRScanner from "@/components/QRScanner";
 import { ROUTES, STORAGE_KEY, type BatchEntry, type RouteId } from "@/lib/types";
 
 function getToday() {
@@ -110,10 +112,11 @@ export default function Home() {
       {/* ═══ HEADER ═══ */}
       <header className="sticky top-0 z-40 border-b border-[#000066]/10 bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-2.5">
-          <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-8 w-auto" />
+          <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-12 w-auto" />
           <nav className="hidden items-center gap-1 sm:flex">
             <a href="#register" className="rounded-lg px-3 py-1.5 text-sm font-bold text-[#4A5470] transition-colors hover:bg-[#000066]/5 hover:text-[#000066]">تسجيل دفعة</a>
             <a href="#ledger" className="rounded-lg px-3 py-1.5 text-sm font-bold text-[#4A5470] transition-colors hover:bg-[#000066]/5 hover:text-[#000066]">السجل</a>
+            <a href="#scanner" className="rounded-lg px-3 py-1.5 text-sm font-bold text-[#4A5470] transition-colors hover:bg-[#000066]/5 hover:text-[#000066]">ماسح QR</a>
             <a href="/admin" className="rounded-lg bg-[#000066]/5 px-3 py-1.5 text-sm font-bold text-[#000066] transition-colors hover:bg-[#000066]/10">الإدارة</a>
           </nav>
           <div className="flex items-center gap-3">
@@ -247,7 +250,7 @@ export default function Home() {
             <table className="w-full min-w-[760px] text-right">
               <thead>
                 <tr className="bg-[#000066] text-white">
-                  {["الدفعة", "المصدر", "الخامة", "الكتلة", "المسار", "المصير", "الحالة", "الوقت"].map((h) => (
+                  {["الدفعة", "المصدر", "الخامة", "الكتلة", "المسار", "المصير", "الحالة", "الوقت", "QR"].map((h) => (
                     <th key={h} className="px-4 py-3 text-xs font-bold">{h}</th>
                   ))}
                 </tr>
@@ -255,7 +258,7 @@ export default function Home() {
               <tbody>
                 {ledger.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="px-4 py-10 text-center text-sm text-[#5A5F7A]">
+                    <td colSpan={9} className="px-4 py-10 text-center text-sm text-[#5A5F7A]">
                       لا توجد دفعات مسجلة. استخدم «وضع العرض» أو ابدأ ببيانات حقيقية.
                     </td>
                   </tr>
@@ -279,6 +282,7 @@ export default function Home() {
                         </span>
                       </td>
                       <td className="px-4 py-3 font-mono text-xs text-[#5A5F7A]">{e.createdAt}</td>
+                      <td className="px-4 py-3"><QRCodeButton entry={e} /></td>
                     </tr>
                   ))
                 )}
@@ -286,6 +290,11 @@ export default function Home() {
             </table>
           </div>
         </div>
+      </div>
+
+      {/* ═══ QR SCANNER ═══ */}
+      <div id="scanner" className="mt-6">
+        <QRScanner />
       </div>
 
       {/* ═══ FOOTER ═══ */}

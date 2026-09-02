@@ -16,6 +16,7 @@ import {
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { QRCodeButton } from "@/components/QRCodeDisplay";
 import { useLocation } from "wouter";
 import { ROUTES, STORAGE_KEY, type BatchEntry, type RouteId } from "@/lib/types";
 
@@ -117,7 +118,7 @@ export default function Admin() {
       <header className="sticky top-0 z-40 border-b border-[#000066]/10 bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-2.5">
           <div className="flex items-center gap-3">
-            <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-8 w-auto" />
+            <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-12 w-auto" />
             <span className="rounded-full bg-[#000066] px-3 py-0.5 text-xs font-bold text-white">الإدارة</span>
           </div>
           <Button
@@ -242,7 +243,7 @@ export default function Admin() {
             <table className="w-full min-w-[820px] text-right">
               <thead>
                 <tr className="bg-[#000066] text-white">
-                  {["الدفعة", "المصدر", "الخامة", "التاريخ", "الكتلة", "المسار", "المصير", "الحالة", "الوقت", ""].map((h, i) => (
+                  {["الدفعة", "المصدر", "الخامة", "التاريخ", "الكتلة", "المسار", "المصير", "الحالة", "الوقت", "QR", ""].map((h, i) => (
                     <th key={i} className="px-4 py-3 text-xs font-bold">{h}</th>
                   ))}
                 </tr>
@@ -250,7 +251,7 @@ export default function Admin() {
               <tbody>
                 {filtered.length === 0 ? (
                   <tr>
-                    <td colSpan={10} className="px-4 py-10 text-center text-sm text-[#5A5F7A]">
+                    <td colSpan={11} className="px-4 py-10 text-center text-sm text-[#5A5F7A]">
                       {ledger.length === 0 ? "لا توجد دفعات مسجلة بعد." : "لا توجد نتائج مطابقة للفلاتر."}
                     </td>
                   </tr>
@@ -276,6 +277,7 @@ export default function Admin() {
                         </span>
                       </td>
                       <td className="px-4 py-3 font-mono text-xs text-[#5A5F7A]">{e.createdAt}</td>
+                      <td className="px-4 py-3"><QRCodeButton entry={e} /></td>
                       <td className="px-4 py-3">
                         <button
                           onClick={() => deleteRow(e.originalIndex)}
