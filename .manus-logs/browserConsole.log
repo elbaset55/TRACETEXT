@@ -23,3 +23,46 @@
 [2026-09-02T21:11:09.034Z] {"timestamp":1788383467863,"level":"DEBUG","args":["[vite] connected."],"stack":null}
 [2026-09-02T21:12:06.806Z] {"timestamp":1788383522419,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
 [2026-09-02T21:12:06.807Z] {"timestamp":1788383523261,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-09-02T21:16:45.082Z] {"timestamp":1788383801838,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T21:16:45.082Z] {"timestamp":1788383802719,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-09-02T21:17:44.829Z] {"timestamp":1788383863847,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T21:17:51.289Z] {"timestamp":1788383869006,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T21:17:51.289Z] {"timestamp":1788383869918,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-09-02T21:21:27.276Z] {"timestamp":1788384085145,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Admin.tsx"],"stack":null}
+[2026-09-02T21:21:27.276Z] {"timestamp":1788384085146,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Home.tsx"],"stack":null}
+[2026-09-02T21:21:27.276Z] {"timestamp":1788384085146,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:21:33.283Z] {"timestamp":1788384091723,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:21:35.285Z] {"timestamp":1788384094175,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:21:51.290Z] {"timestamp":1788384109059,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Home.tsx"],"stack":null}
+[2026-09-02T21:21:51.290Z] {"timestamp":1788384109059,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:21:53.295Z] {"timestamp":1788384111631,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Home.tsx"],"stack":null}
+[2026-09-02T21:21:53.295Z] {"timestamp":1788384111631,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:21:55.536Z] {"timestamp":1788384115227,"level":"ERROR","args":["[vite]","Failed to reload /src/pages/Home.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above)"],"stack":"Error\n    at console.<computed> (https://3000-6a9892106d0b28536e95ea7e--b-f83df9e-f18b10d9d0b513f1.imported.base44-preview.app/__manus__/debug-collector.js:391:37)\n    at console.error (https://app.base44.com/builder-bridge.js:12741:22)\n    at Object.error (https://3000-6a9892106d0b28536e95ea7e--b-f83df9e-f18b10d9d0b513f1.imported.base44-preview.app/@vite/client:809:26)\n    at HMRClient.warnFailedUpdate (https://3000-6a9892106d0b28536e95ea7e--b-f83df9e-f18b10d9d0b513f1.imported.base44-preview.app/@vite/client:181:15)\n    at HMRClient.fetchUpdate (https://3000-6a9892106d0b28536e95ea7e--b-f83df9e-f18b10d9d0b513f1.imported.base44-preview.app/@vite/client:212:10)\n    at async Promise.all (index 0)\n    at async HMRClient.queueUpdate (https://3000-6a9892106d0b28536e95ea7e--b-f83df9e-f18b10d9d0b513f1.imported.base44-preview.app/@vite/client:196:5)\n    at async Promise.all (index 0)\n    at async handleMessage (https://3000-6a9892106d0b28536e95ea7e--b-f83df9e-f18b10d9d0b513f1.imported.base44-preview.app/@vite/client:838:4)"}
+[2026-09-02T21:21:55.536Z] {"timestamp":1788384115239,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Home.tsx"],"stack":null}
+[2026-09-02T21:21:55.536Z] {"timestamp":1788384115239,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:21:58.837Z] {"timestamp":1788384116559,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T21:21:58.837Z] {"timestamp":1788384117572,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-09-02T21:22:26.770Z] {"timestamp":1788384144513,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T21:22:26.770Z] {"timestamp":1788384145439,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-09-02T21:22:57.241Z] {"timestamp":1788384172765,"level":"WARN","args":["Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}."],"stack":null}
+[2026-09-02T21:24:06.821Z] {"timestamp":1788384246306,"level":"WARN","args":["Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}."],"stack":null}
+[2026-09-02T21:24:47.710Z] {"timestamp":1788384286908,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Admin.tsx"],"stack":null}
+[2026-09-02T21:24:47.710Z] {"timestamp":1788384286908,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Home.tsx"],"stack":null}
+[2026-09-02T21:24:47.710Z] {"timestamp":1788384286908,"level":"DEBUG","args":["[vite]","hot updated: /src/components/QRCodeDisplay.tsx"],"stack":null}
+[2026-09-02T21:24:47.710Z] {"timestamp":1788384286908,"level":"DEBUG","args":["[vite]","hot updated: /src/components/QRScanner.tsx"],"stack":null}
+[2026-09-02T21:24:47.710Z] {"timestamp":1788384286908,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:25:07.710Z] {"timestamp":1788384305753,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:25:07.710Z] {"timestamp":1788384306755,"level":"DEBUG","args":["[vite]","hot updated: /src/App.tsx"],"stack":null}
+[2026-09-02T21:25:07.710Z] {"timestamp":1788384306755,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:25:26.800Z] {"timestamp":1788384326518,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Home.tsx"],"stack":null}
+[2026-09-02T21:25:26.800Z] {"timestamp":1788384326518,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:25:42.830Z] {"timestamp":1788384340617,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:25:42.830Z] {"timestamp":1788384340618,"level":"DEBUG","args":["[vite]","hot updated: /src/components/QRScanner.tsx"],"stack":null}
+[2026-09-02T21:25:42.830Z] {"timestamp":1788384341189,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:25:42.830Z] {"timestamp":1788384341190,"level":"DEBUG","args":["[vite]","hot updated: /src/components/QRCodeDisplay.tsx"],"stack":null}
+[2026-09-02T21:26:06.804Z] {"timestamp":1788384366465,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Admin.tsx"],"stack":null}
+[2026-09-02T21:26:06.804Z] {"timestamp":1788384366465,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:26:17.669Z] {"timestamp":1788384375420,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T21:26:17.669Z] {"timestamp":1788384376445,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-09-02T21:26:39.961Z] {"timestamp":1788384397696,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T21:26:39.961Z] {"timestamp":1788384398651,"level":"DEBUG","args":["[vite] connected."],"stack":null}

@@ -6,8 +6,10 @@ import { useEffect, useMemo, useState } from "react";
 import {
   ArrowRight,
   Beaker,
+  Contrast,
   Download,
   FlaskConical,
+  Globe,
   Package,
   Scale,
   Search,
@@ -18,8 +20,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 import { ROUTES, STORAGE_KEY, type BatchEntry, type RouteId } from "@/lib/types";
+import { useSettings } from "@/contexts/SettingsContext";
+import { QRCodeButton } from "@/components/QRCodeDisplay";
 
 export default function Admin() {
+  const { t, lang, toggleLang, highContrast, toggleHighContrast, user } = useSettings();
   const [, setLocation] = useLocation();
   const [ledger, setLedger] = useState<BatchEntry[]>([]);
   const [routeFilter, setRouteFilter] = useState<RouteId | "ALL">("ALL");
@@ -47,6 +52,8 @@ export default function Admin() {
   function deleteRow(index: number) {
     saveLedger(ledger.filter((_, i) => i !== index));
   }
+
+  const rt = (r: (typeof ROUTES)[number]) => (lang === "ar" ? r.title : r.titleEn);
 
   // ── Stats ──
   const totalCount = ledger.length;
@@ -87,10 +94,14 @@ export default function Admin() {
   }, [ledger, routeFilter, statusFilter, search]);
 
   function exportCSV() {
-    const headers = ["الدفعة", "المصدر", "الخامة", "التاريخ", "الكتلة (كجم)", "المسار", "المصير", "الحالة", "الوقت"];
+    const headers = [
+      t("admin.col.batch"), t("admin.col.source"), t("admin.col.material"),
+      t("admin.col.date"), t("admin.col.mass"), t("admin.col.route"),
+      t("admin.col.outcome"), t("admin.col.status"), t("admin.col.time"),
+    ];
     const rows = ledger.map((e) => [
       e.id, e.source, e.material, e.date, e.mass, e.route, e.outcome,
-      e.demo ? "محاكاة" : "ميداني", e.createdAt,
+      e.demo ? t("ledger.simulation") : t("ledger.field"), e.createdAt,
     ]);
     const csv = [headers, ...rows]
       .map((row) => row.map((cell) => `"${cell}"`).join(","))
@@ -105,39 +116,64 @@ export default function Admin() {
   }
 
   const stats = [
-    { label: "إجمالي الدفعات", value: totalCount, icon: Package, color: "#000066" },
-    { label: "إجمالي الكتلة", value: `${totalMass.toFixed(2)} kg`, icon: Scale, color: "#3F7E84" },
-    { label: "دفعات ميدانية", value: fieldCount, icon: ShieldCheck, color: "#1D3A30" },
-    { label: "دفعات محاكاة", value: demoCount, icon: FlaskConical, color: "#A67D55" },
+    { label: t("admin.totalBatches"), value: totalCount, icon: Package, color: "#000066" },
+    { label: t("admin.totalMass"), value: `${totalMass.toFixed(2)} kg`, icon: Scale, color: "#3F7E84" },
+    { label: t("admin.fieldBatches"), value: fieldCount, icon: ShieldCheck, color: "#1D3A30" },
+    { label: t("admin.demoBatches"), value: demoCount, icon: FlaskConical, color: "#A67D55" },
+  ];
+
+  const statusFilters = [
+    { key: "ALL" as const, label: t("admin.all") },
+    { key: "field" as const, label: t("ledger.field") },
+    { key: "demo" as const, label: t("ledger.simulation") },
   ];
 
   return (
-    <div className="min-h-screen bg-[#F5F2ED] text-[#000033]" dir="rtl">
+    <div className="min-h-screen bg-[#F5F2ED] pb-12 text-[#000033]">
       {/* ═══ HEADER ═══ */}
       <header className="sticky top-0 z-40 border-b border-[#000066]/10 bg-white/95 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-2.5">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2.5">
           <div className="flex items-center gap-3">
-            <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-8 w-auto" />
-            <span className="rounded-full bg-[#000066] px-3 py-0.5 text-xs font-bold text-white">الإدارة</span>
+            <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-11 w-auto" />
+            <span className="rounded-full bg-[#000066] px-3 py-0.5 text-xs font-bold text-white">{t("nav.admin")}</span>
           </div>
-          <Button
-            onClick={() => setLocation("/")}
-            variant="ghost"
-            className="h-9 rounded-lg px-3 text-sm font-bold text-[#4A5470] hover:bg-[#000066]/5 hover:text-[#000066]"
-          >
-            لوحة التتبع <ArrowRight className="mr-1 h-4 w-4" />
-          </Button>
-          <div className="flex items-center gap-3">
-            <img src="/assets/benha-university-logo.png" alt="جامعة بنها" className="h-7 w-7 object-contain" />
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleLang}
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#000066]/12 text-[#000066] transition-colors hover:bg-[#000066]/5"
+              title={t("profile.language")}
+            >
+              <Globe className="h-4 w-4" />
+            </button>
+            <button
+              onClick={toggleHighContrast}
+              className={`flex h-9 w-9 items-center justify-center rounded-lg border transition-colors ${highContrast ? "border-[#000066] bg-[#000066]/5 text-[#000066]" : "border-[#000066]/12 text-[#4A5470] hover:bg-[#000066]/5"}`}
+              title={t("profile.highContrast")}
+            >
+              <Contrast className="h-4 w-4" />
+            </button>
+            <Button
+              onClick={() => setLocation("/")}
+              variant="ghost"
+              className="h-9 rounded-lg px-3 text-sm font-bold text-[#4A5470] hover:bg-[#000066]/5 hover:text-[#000066]"
+            >
+              {t("admin.backToTrack")} <ArrowRight className="mr-1 h-4 w-4" />
+            </Button>
+            <img src="/assets/benha-university-logo.png" alt="Benha University" className="h-7 w-7 object-contain" />
           </div>
         </div>
       </header>
 
-      <div className="mx-auto max-w-6xl px-5 py-6">
+      <div className="mx-auto max-w-6xl px-4 py-6">
         {/* ═══ TITLE ═══ */}
         <div className="mb-5">
-          <h1 className="font-display text-3xl font-extrabold tracking-tight text-[#000066]">لوحة إدارة الجامعة</h1>
-          <p className="mt-1 text-sm text-[#5A5F7A]">نظرة شاملة على جميع دفعات القصاصات المسجلة</p>
+          <h1 className="font-display text-3xl font-extrabold tracking-tight text-[#000066]">{t("admin.title")}</h1>
+          <p className="mt-1 text-sm text-[#5A5F7A]">{t("admin.subtitle")}</p>
+          {user && (
+            <p className="mt-1 text-xs font-bold text-[#000066]">
+              {t("profile.welcome")}, {user.name} — {t(`profile.roles.${user.role}`)}
+            </p>
+          )}
         </div>
 
         {/* ═══ STATS ═══ */}
@@ -157,15 +193,15 @@ export default function Admin() {
 
         {/* ═══ ROUTE DISTRIBUTION ═══ */}
         <div className="mt-5 rounded-2xl border border-[#000066]/8 bg-white p-5 shadow-sm">
-          <h2 className="font-display text-lg font-extrabold text-[#000066]">توزيع المسارات</h2>
+          <h2 className="font-display text-lg font-extrabold text-[#000066]">{t("admin.routeDist")}</h2>
           <div className="mt-4 space-y-3">
             {routeStats.map((r) => (
               <div key={r.id} className="flex items-center gap-3">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg font-mono text-xs font-bold text-white" style={{ background: r.color }}>{r.id}</span>
                 <div className="flex-1">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-[#3D4566]">{r.title}</span>
-                    <span className="font-mono text-[#5A5F7A]">{r.count} دفعة · {r.mass.toFixed(2)} kg · {r.pct}%</span>
+                    <span className="font-bold text-[#3D4566]">{rt(r)}</span>
+                    <span className="font-mono text-[#5A5F7A]">{r.count} — {r.mass.toFixed(2)} kg · {r.pct}%</span>
                   </div>
                   <div className="mt-1 h-2.5 overflow-hidden rounded-full bg-[#000066]/5">
                     <div
@@ -183,13 +219,12 @@ export default function Admin() {
         <div className="mt-5 rounded-2xl border border-[#000066]/8 bg-white shadow-sm">
           {/* Filter bar */}
           <div className="flex flex-wrap items-center gap-3 border-b border-[#000066]/8 px-5 py-3">
-            {/* Route filter pills */}
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setRouteFilter("ALL")}
                 className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${routeFilter === "ALL" ? "bg-[#000066] text-white" : "text-[#4A5470] hover:bg-[#000066]/5"}`}
               >
-                الكل
+                {t("admin.all")}
               </button>
               {ROUTES.map((r) => (
                 <button
@@ -203,13 +238,8 @@ export default function Admin() {
               ))}
             </div>
 
-            {/* Status filter pills */}
             <div className="flex items-center gap-1">
-              {[
-                { key: "ALL" as const, label: "الكل" },
-                { key: "field" as const, label: "ميداني" },
-                { key: "demo" as const, label: "محاكاة" },
-              ].map((s) => (
+              {statusFilters.map((s) => (
                 <button
                   key={s.key}
                   onClick={() => setStatusFilter(s.key)}
@@ -220,38 +250,36 @@ export default function Admin() {
               ))}
             </div>
 
-            {/* Search */}
             <div className="relative flex-1 min-w-[160px]">
               <Search className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9CA0B8]" />
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="بحث برقم الدفعة، المصدر، الخامة..."
+                placeholder={t("admin.search")}
                 className="w-full rounded-lg border border-[#000066]/12 bg-[#FCFBF8] py-2 pr-9 pl-3 text-sm text-[#000033] outline-none transition-colors focus:border-[#000066] focus:ring-2 focus:ring-[#66FF00]/15"
               />
             </div>
 
-            {/* Export */}
             <Button onClick={exportCSV} disabled={ledger.length === 0} className="h-9 rounded-lg bg-[#000066] px-3 text-xs font-bold text-white hover:bg-[#00004d] disabled:opacity-40">
-              <Download className="ml-1.5 h-3.5 w-3.5" /> تصدير CSV
+              <Download className="ml-1.5 h-3.5 w-3.5" /> {t("admin.export")}
             </Button>
           </div>
 
           {/* Table */}
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[820px] text-right">
+            <table className="w-full min-w-[880px] text-right">
               <thead>
                 <tr className="bg-[#000066] text-white">
-                  {["الدفعة", "المصدر", "الخامة", "التاريخ", "الكتلة", "المسار", "المصير", "الحالة", "الوقت", ""].map((h, i) => (
-                    <th key={i} className="px-4 py-3 text-xs font-bold">{h}</th>
+                  {["admin.col.batch", "admin.col.source", "admin.col.material", "admin.col.date", "admin.col.mass", "admin.col.route", "admin.col.outcome", "admin.col.status", "admin.col.time", "admin.col.qr", ""].map((h, i) => (
+                    <th key={i} className="px-4 py-3 text-xs font-bold">{h ? t(h) : ""}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {filtered.length === 0 ? (
                   <tr>
-                    <td colSpan={10} className="px-4 py-10 text-center text-sm text-[#5A5F7A]">
-                      {ledger.length === 0 ? "لا توجد دفعات مسجلة بعد." : "لا توجد نتائج مطابقة للفلاتر."}
+                    <td colSpan={11} className="px-4 py-10 text-center text-sm text-[#5A5F7A]">
+                      {ledger.length === 0 ? t("admin.noBatches") : t("admin.noMatch")}
                     </td>
                   </tr>
                 ) : (
@@ -272,15 +300,16 @@ export default function Admin() {
                           color: e.demo ? "#8B6539" : "#000066",
                         }}>
                           {e.demo ? <Beaker className="h-3 w-3" /> : <ShieldCheck className="h-3 w-3" />}
-                          {e.demo ? "محاكاة" : "ميداني"}
+                          {e.demo ? t("ledger.simulation") : t("ledger.field")}
                         </span>
                       </td>
                       <td className="px-4 py-3 font-mono text-xs text-[#5A5F7A]">{e.createdAt}</td>
+                      <td className="px-4 py-3"><QRCodeButton entry={e} /></td>
                       <td className="px-4 py-3">
                         <button
                           onClick={() => deleteRow(e.originalIndex)}
                           className="flex h-7 w-7 items-center justify-center rounded-lg text-[#B85F47] transition-colors hover:bg-[#B85F47]/10"
-                          title="حذف"
+                          title={t("admin.delete")}
                         >
                           <X className="h-4 w-4" />
                         </button>
@@ -295,13 +324,13 @@ export default function Admin() {
           {/* Table footer */}
           {filtered.length > 0 && (
             <div className="flex items-center justify-between border-t border-[#000066]/8 px-5 py-2.5 text-xs text-[#5A5F7A]">
-              <span>عرض {filtered.length} من {totalCount} دفعة</span>
+              <span>{t("admin.showing", { count: filtered.length, total: totalCount })}</span>
               {filtered !== ledger && (
                 <button
                   onClick={() => { setRouteFilter("ALL"); setStatusFilter("ALL"); setSearch(""); }}
                   className="font-bold text-[#000066] hover:underline"
                 >
-                  إزالة الفلاتر
+                  {t("admin.clearFilters")}
                 </button>
               )}
             </div>
@@ -313,11 +342,11 @@ export default function Admin() {
       <footer className="mt-6 border-t border-[#000066]/10 bg-[#000066] py-5">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5">
           <div className="flex items-center gap-3">
-            <img src="/assets/benha-university-logo.png" alt="جامعة بنها" className="h-7 w-7 object-contain" />
-            <span className="text-sm text-[#A0A8C8]">TRACETEX · لوحة الإدارة · جامعة بنها · 2026</span>
+            <img src="/assets/benha-university-logo.png" alt="Benha University" className="h-7 w-7 object-contain" />
+            <span className="text-sm text-[#A0A8C8]">{t("footer.admin")}</span>
           </div>
           <span className="flex items-center gap-2 text-xs font-bold text-[#66FF00]">
-            <ShieldCheck className="h-3.5 w-3.5" /> يعتمد التقرير على سجل الفريق الحقيقي
+            <ShieldCheck className="h-3.5 w-3.5" /> {t("footer.trust")}
           </span>
         </div>
       </footer>
