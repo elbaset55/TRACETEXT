@@ -251,3 +251,5 @@
 [2026-09-02T22:55:39.812Z] {"timestamp":1788389737912,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
 [2026-09-02T22:55:43.815Z] {"timestamp":1788389742525,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Home.tsx"],"stack":null}
 [2026-09-02T22:55:43.815Z] {"timestamp":1788389742525,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T22:57:01.712Z] {"timestamp":1788389816501,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T22:57:04.099Z] {"timestamp":1788389818781,"level":"DEBUG","args":["[vite] connected."],"stack":null}
