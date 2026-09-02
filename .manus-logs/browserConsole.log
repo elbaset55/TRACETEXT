@@ -212,3 +212,19 @@
 [2026-09-02T21:52:25.763Z] {"timestamp":1788385926821,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
 [2026-09-02T21:52:25.763Z] {"timestamp":1788385930840,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Admin.tsx"],"stack":null}
 [2026-09-02T21:52:25.763Z] {"timestamp":1788385930840,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:53:26.724Z] {"timestamp":1788386003564,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T21:53:26.724Z] {"timestamp":1788386004412,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-09-02T22:09:18.892Z] {"timestamp":1788386956977,"level":"LOG","args":["[vite] server connection lost. Polling for restart..."],"stack":null}
+[2026-09-02T22:09:22.747Z] {"timestamp":1788386959841,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T22:09:22.747Z] {"timestamp":1788386960742,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-09-02T22:09:51.174Z] {"timestamp":1788386989900,"level":"LOG","args":["[vite] server connection lost. Polling for restart..."],"stack":null}
+[2026-09-02T22:09:54.722Z] {"timestamp":1788386992340,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T22:09:54.722Z] {"timestamp":1788386993252,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-09-02T22:25:03.071Z] {"timestamp":1788387901258,"level":"LOG","args":["[vite] server connection lost. Polling for restart..."],"stack":null}
+[2026-09-02T22:25:07.760Z] {"timestamp":1788387904608,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T22:25:07.760Z] {"timestamp":1788387905512,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-09-02T22:40:14.734Z] {"timestamp":1788388812929,"level":"LOG","args":["[vite] server connection lost. Polling for restart..."],"stack":null}
+[2026-09-02T22:40:19.169Z] {"timestamp":1788388815754,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T22:40:19.169Z] {"timestamp":1788388816662,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-09-02T22:53:00.011Z] {"timestamp":1788389578567,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T22:53:00.011Z] {"timestamp":1788389578568,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Landing.tsx"],"stack":null}

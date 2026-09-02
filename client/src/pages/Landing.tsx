@@ -32,12 +32,14 @@ export default function Landing() {
       <div className="pointer-events-none absolute -top-32 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-[#66FF00]/12 blur-3xl" />
 
       <div className="relative mx-auto flex min-h-screen max-w-2xl flex-col items-center px-6 py-10">
-        {/* logo */}
-        <img
-          src="/assets/tracetex-logo.png"
-          alt="TRACETEX"
-          className="h-32 w-auto drop-shadow-[0_0_30px_rgba(102,255,0,0.5)]"
-        />
+        {/* logo on light card for contrast */}
+        <div className="relative rounded-2xl bg-[#F5F2ED] p-5 shadow-2xl shadow-[#66FF00]/10 ring-1 ring-white/20">
+          <img
+            src="/assets/tracetex-logo.png"
+            alt="TRACETEX"
+            className="h-28 w-auto"
+          />
+        </div>
 
         {/* title */}
         <h1 className="mt-6 font-display text-4xl font-extrabold tracking-tight">{t("landing.title")}</h1>
