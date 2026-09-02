@@ -3,11 +3,10 @@
  * Navy #000066 / Neon Green #66FF00 / Orange #F7941D / Cream #F5F2ED
  * Route palette from the physical prototype bins.
  */
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CheckCircle2,
   CircleAlert,
-  Database,
   Play,
   ShieldCheck,
 } from "lucide-react";
@@ -17,6 +16,7 @@ import { useSettings } from "@/contexts/SettingsContext";
 import QRScanner from "@/components/QRScanner";
 import ProfileTab from "@/components/ProfileTab";
 import SettingsTab from "@/components/SettingsTab";
+import RegisterSuccess from "@/components/RegisterSuccess";
 import BottomNav, { type TabId } from "@/components/BottomNav";
 
 function getToday() {
@@ -38,6 +38,8 @@ export default function Home() {
   const [demoMode, setDemoMode] = useState(false);
   const [ledger, setLedger] = useState<BatchEntry[]>([]);
   const [notice, setNotice] = useState("");
+  const [lastEntry, setLastEntry] = useState<BatchEntry | null>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const source = sourceType === "other" ? sourceOther.trim() : sourceType;
 
@@ -64,11 +66,6 @@ export default function Home() {
 
   const activeRoute = ROUTES.find((r) => r.id === route) ?? ROUTES[0];
   const valid = Boolean(batchId.trim() && source.trim() && material.trim() && Number(mass) > 0);
-  const routeCounts = useMemo(
-    () => ROUTES.map((r) => ({ ...r, count: ledger.filter((e) => e.route === r.id).length })),
-    [ledger],
-  );
-  const totalCount = ledger.length;
 
   const sourceOptions = [
     { value: "applied-arts", label: t("source.appliedArts") },
@@ -117,7 +114,8 @@ export default function Home() {
       createdAt: new Date().toLocaleTimeString(lang === "ar" ? "ar-EG" : "en-GB", { hour: "2-digit", minute: "2-digit" }),
     };
     setLedger((items) => [entry, ...items]);
-    setNotice(demoMode ? t("home.registeredDemo") : t("home.registered"));
+    setLastEntry(entry);
+    setShowSuccess(true);
     resetForm();
   }
 
@@ -132,7 +130,7 @@ export default function Home() {
       <header className="sticky top-0 z-30 border-b border-[#000066]/10 bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2.5">
           <a href="/" aria-label="TRACETEX — الرئيسية" className="flex items-center transition-transform hover:scale-105">
-            <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-14 w-auto" />
+            <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-16 w-auto" />
           </a>
           <div className="flex items-center gap-2">
             {user ? (
@@ -161,31 +159,6 @@ export default function Home() {
       </header>
 
       <div className="mx-auto max-w-6xl px-4 py-4">
-        {/* ═══ TITLE + STATS ═══ */}
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h1 className="font-display text-2xl font-extrabold tracking-tight text-[#000066]">{t("home.title")}</h1>
-            <p className="mt-0.5 text-sm text-[#5A5F7A]">{totalCount} {t("home.batchCount")}</p>
-          </div>
-          <div className="flex items-center gap-2 rounded-xl border border-[#000066]/10 bg-white px-3 py-2 text-xs text-[#5A5F7A]">
-            <Database className="h-4 w-4 text-[#000066]" />
-            <span>{t("home.localData")}</span>
-          </div>
-        </div>
-
-        {/* Stats cards */}
-        <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-5">
-          {routeCounts.map((r) => (
-            <div key={r.id} className="rounded-xl border border-[#000066]/8 bg-white p-3 transition-shadow hover:shadow-md">
-              <div className="flex items-center justify-between">
-                <span className="flex h-6 w-6 items-center justify-center rounded-lg font-mono text-xs font-bold text-white" style={{ background: r.color }}>{r.id}</span>
-                <span className="font-display text-2xl font-extrabold text-[#000066]">{r.count}</span>
-              </div>
-              <p className="mt-1.5 text-[11px] font-bold leading-tight text-[#3D4566]">{rt(r)}</p>
-            </div>
-          ))}
-        </div>
-
         {/* ═══ TAB CONTENT ═══ */}
         {tab === "register" && (
           <div className="mt-5 rounded-2xl border border-[#000066]/10 bg-white p-5 shadow-sm">
@@ -321,6 +294,9 @@ export default function Home() {
 
       {/* ═══ BOTTOM NAV ═══ */}
       <BottomNav active={tab} onChange={setTab} />
+
+      {/* ═══ SUCCESS DIALOG ═══ */}
+      <RegisterSuccess entry={lastEntry} open={showSuccess} onClose={() => setShowSuccess(false)} />
     </div>
   );
 }

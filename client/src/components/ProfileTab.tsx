@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Trash2, UserCog, BookOpen } from "lucide-react";
+import { CheckCircle2, Trash2, UserCog, BookOpen, Database } from "lucide-react";
 import { useSettings, type UserRole } from "@/contexts/SettingsContext";
 import { ROUTES, type BatchEntry } from "@/lib/types";
 import { QRCodeButton } from "@/components/QRCodeDisplay";
@@ -21,6 +21,12 @@ export default function ProfileTab({
 
   const rt = (r: (typeof ROUTES)[number]) => (lang === "ar" ? r.title : r.titleEn);
 
+  const routeCounts = useMemo(
+    () => ROUTES.map((r) => ({ ...r, count: ledger.filter((e) => e.route === r.id).length })),
+    [ledger],
+  );
+  const totalCount = ledger.length;
+
   function save() {
     if (!name.trim() || !role) return;
     setUser({ name: name.trim(), role: role as UserRole });
@@ -30,6 +36,32 @@ export default function ProfileTab({
 
   return (
     <div className="space-y-4">
+      {/* Dashboard title + stats */}
+      <div>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="font-display text-2xl font-extrabold tracking-tight text-[#000066]">{t("home.title")}</h1>
+            <p className="mt-0.5 text-sm text-[#5A5F7A]">{totalCount} {t("home.batchCount")}</p>
+          </div>
+          <div className="flex items-center gap-2 rounded-xl border border-[#000066]/10 bg-white px-3 py-2 text-xs text-[#5A5F7A]">
+            <Database className="h-4 w-4 text-[#000066]" />
+            <span>{t("home.localData")}</span>
+          </div>
+        </div>
+
+        <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-5">
+          {routeCounts.map((r) => (
+            <div key={r.id} className="rounded-xl border border-[#000066]/8 bg-white p-3 transition-shadow hover:shadow-md">
+              <div className="flex items-center justify-between">
+                <span className="flex h-6 w-6 items-center justify-center rounded-lg font-mono text-xs font-bold text-white" style={{ background: r.color }}>{r.id}</span>
+                <span className="font-display text-2xl font-extrabold text-[#000066]">{r.count}</span>
+              </div>
+              <p className="mt-1.5 text-[11px] font-bold leading-tight text-[#3D4566]">{rt(r)}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* User identity card */}
       <div className="rounded-2xl border border-[#000066]/10 bg-white p-5 shadow-sm">
         <div className="flex items-center justify-between border-b border-[#000066]/8 pb-4">

@@ -202,7 +202,7 @@ export default function Admin() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2.5">
           <div className="flex items-center gap-3">
             <a href="/" aria-label="TRACETEX — الرئيسية" className="flex items-center transition-transform hover:scale-105">
-              <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-14 w-auto" />
+              <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-16 w-auto" />
             </a>
             <span className="rounded-full bg-[#000066] px-3 py-0.5 text-xs font-bold text-white">{t("nav.admin")}</span>
           </div>
