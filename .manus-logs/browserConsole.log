@@ -19,3 +19,7 @@
 [2026-09-02T21:09:56.501Z] {"timestamp":1788383392182,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
 [2026-09-02T21:09:56.501Z] {"timestamp":1788383392722,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Home.tsx"],"stack":null}
 [2026-09-02T21:09:56.501Z] {"timestamp":1788383392722,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T21:11:09.034Z] {"timestamp":1788383466750,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T21:11:09.034Z] {"timestamp":1788383467863,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-09-02T21:12:06.806Z] {"timestamp":1788383522419,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T21:12:06.807Z] {"timestamp":1788383523261,"level":"DEBUG","args":["[vite] connected."],"stack":null}
