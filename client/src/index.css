@@ -1,0 +1,169 @@
+/**
+ * Design reminder — Nasej / «نسيج حيوي ميداني»:
+ * Warm ivory field notes, #174C3C mycelium-green, kraft fiber and teal measurement cues.
+ * Evidence and material traceability must feel more important than decorative dashboard metrics.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "IBM Plex Sans Arabic", sans-serif;
+  --font-display: "Alexandria", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius: 0rem;
+}
+
+:root {
+  --background: oklch(0.955 0.01 84);
+  --foreground: oklch(0.26 0.042 160);
+  --card: oklch(0.985 0.004 85);
+  --card-foreground: oklch(0.26 0.042 160);
+  --popover: oklch(0.985 0.004 85);
+  --popover-foreground: oklch(0.26 0.042 160);
+  --primary: oklch(0.35 0.075 160);
+  --primary-foreground: oklch(0.98 0.005 85);
+  --secondary: oklch(0.91 0.022 155);
+  --secondary-foreground: oklch(0.26 0.042 160);
+  --muted: oklch(0.93 0.012 85);
+  --muted-foreground: oklch(0.49 0.025 160);
+  --accent: oklch(0.9 0.04 170);
+  --accent-foreground: oklch(0.26 0.042 160);
+  --destructive: oklch(0.56 0.17 30);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.81 0.019 85);
+  --input: oklch(0.81 0.019 85);
+  --ring: oklch(0.45 0.09 175);
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html { scroll-behavior: smooth; }
+  body { @apply bg-background text-foreground font-sans; }
+  button, a { -webkit-tap-highlight-color: transparent; }
+}
+
+@layer components {
+  /* TRACETEX: material trace console fields must remain readable on warm ivory. */
+  .trace-input {
+    width: 100%;
+    margin-top: 0.5rem;
+    border: 1px solid rgb(23 76 60 / 0.18);
+    background: #F8F7F2;
+    padding: 0.75rem;
+    color: #17342B;
+    outline: none;
+    transition: border-color 160ms cubic-bezier(0.23, 1, 0.32, 1), transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .trace-input:focus { border-color: #2C7A7B; transform: translateY(-1px); }
+
+  .font-display { font-family: "Alexandria", sans-serif; }
+  .font-mono { font-family: "IBM Plex Mono", monospace; }
+  .eyebrow { color: #174C3C; font-size: .7rem; font-weight: 800; letter-spacing: .15em; }
+  .fiber-thread { position: absolute; pointer-events: none; border-color: rgba(160,106,59,.34); border-style: dashed; }
+  .trace-ribbon { position: relative; z-index: 2; display: flex; align-items: center; justify-content: flex-end; gap: 0; margin-bottom: 20px; color: #174C3C; font-family: "IBM Plex Mono", monospace; }
+  .trace-ribbon > div { min-width: 94px; display: flex; align-items: center; gap: 7px; background: rgba(255,253,249,.82); border-top: 2px solid #174C3C; padding: 8px 10px 7px; font-size: 10px; font-weight: 700; letter-spacing: .02em; }
+  .trace-ribbon > div:nth-of-type(1) { border-color: #A06A3B; color: #754A28; }
+  .trace-ribbon > div:nth-of-type(2) { border-color: #174C3C; }
+  .trace-ribbon > div:nth-of-type(3) { border-color: #174C3C; }
+  .trace-ribbon > div:nth-of-type(4) { border-color: #2C7A7B; color: #165559; }
+  .trace-ribbon > div:nth-of-type(5) { border-color: #B6583A; color: #8B412D; }
+  .trace-ribbon b { font-size: 9px; }
+  .trace-ribbon i { display: block; width: 31px; height: 1px; border-top: 1px dashed rgba(23,76,60,.55); }
+  .sample-stamp { position: absolute; top: 26px; right: 24px; display: flex; align-items: center; gap: 8px; background-color: rgba(243,240,232,.94); background-image: linear-gradient(90deg, rgba(160,106,59,.12) 1px, transparent 1px), linear-gradient(rgba(160,106,59,.08) 1px, transparent 1px); background-size: 6px 6px; color: #174C3C; padding: 9px 11px; font-size: 11px; font-weight: 800; line-height: 1.35; }
+  .sample-stamp img { height: 28px; width: 28px; object-fit: contain; }
+  .fiber-thread-hero { left: 5%; top: 11%; height: 58%; width: 19%; border-left-width: 2px; border-top-width: 2px; border-radius: 55% 0 0 0; }
+  .fiber-thread-system { right: 7%; top: 8%; height: 67%; width: 13%; border-right-width: 2px; border-bottom-width: 2px; border-radius: 0 0 55% 0; }
+  .fiber-thread-tracks { left: 7%; top: 12%; height: 48%; width: 15%; border-left-width: 2px; border-bottom-width: 2px; border-radius: 0 0 0 55%; }
+  .route-step { position: relative; min-height: 220px; }
+  .route-step::after { content: "↓"; position: absolute; left: -11px; top: 44%; z-index: 2; color: #174C3C; font-size: 20px; }
+  .route-step:last-child::after { display: none; }
+  .route-kraft { border-top: 4px solid #A06A3B; background-image: repeating-linear-gradient(90deg, rgba(160,106,59,.045) 0 2px, transparent 2px 8px); }
+  .route-green { border-top: 4px solid #174C3C; }
+  .route-teal { border-top: 4px solid #2C7A7B; }
+  .route-rust { border-top: 4px solid #B6583A; }
+  .operating-ledger { background: rgba(255,253,249,.42); }
+  .ledger-row { display: grid; grid-template-columns: 78px 62px 206px 1fr 132px; gap: 18px; align-items: center; min-height: 118px; padding: 13px 18px 13px 0; border-bottom: 1px solid rgba(23,76,60,.14); }
+  .ledger-row:last-child { border-bottom: 0; }
+  .ledger-seq { height: 92px; border-left: 1px dashed rgba(23,76,60,.26); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 700; }
+  .ledger-seq i { width: 10px; height: 10px; background: #174C3C; }
+  .ledger-icon { display: flex; width: 44px; height: 44px; align-items: center; justify-content: center; border: 1px solid currentColor; }
+  .ledger-status { font-family: "IBM Plex Mono", monospace; font-size: 10px; font-weight: 700; letter-spacing: .15em; }
+  .ledger-row > p { color: #5C7168; font-size: 15px; line-height: 1.65; }
+  .ledger-output { border-right: 2px solid currentColor; padding-right: 11px; font-size: 13px; font-weight: 800; }
+  .ledger-teal { color: #2C7A7B; }
+  .ledger-green { color: #174C3C; }
+  .ledger-kraft { color: #A06A3B; }
+  .ledger-rust { color: #B6583A; }
+  .path-button-green { border-color: #174C3C; background: #DFECE5; color: #174C3C; }
+  .path-button-teal { border-color: #2C7A7B; background: #E2F0EE; color: #165559; }
+  .path-button-kraft { border-color: #A06A3B; background: #F3E8DE; color: #754A28; }
+  .path-button-rust { border-color: #B6583A; background: #F5E3DC; color: #92462F; }
+  .control-strip { position: relative; border-bottom: 2px solid rgba(23,76,60,.18); padding-bottom: 12px; }
+  .control-strip::before { content: "RESEARCH GATE · C0 / C1 / T1"; position: absolute; right: 0; top: -24px; color: #2C7A7B; font-family: "IBM Plex Mono", monospace; font-size: 10px; font-weight: 700; letter-spacing: .13em; }
+  .control-strip button { position: relative; border-top-width: 4px !important; box-shadow: none !important; }
+  .control-strip button:nth-child(1) { border-top-color: #737A78 !important; }
+  .control-strip button:nth-child(2) { border-top-color: #A06A3B !important; background-image: repeating-linear-gradient(90deg, rgba(160,106,59,.045) 0 2px, transparent 2px 8px); }
+  .control-strip button:nth-child(3) { border-top-color: #174C3C !important; }
+  .control-strip button:nth-child(4) { border-top-color: #2C7A7B !important; }
+  .protocol-ledger { min-height: 430px; }
+  .protocol-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; border-top: 1px solid rgba(255,255,255,.14); }
+  .protocol-grid > div { min-height: 164px; padding: 17px 14px 0; border-left: 1px solid rgba(255,255,255,.13); }
+  .protocol-grid > div:last-child { border-left: 0; }
+  .protocol-grid span { display: block; color: #174C3C; font-family: "IBM Plex Mono", monospace; font-size: 11px; font-weight: 700; }
+  .protocol-grid > div:nth-child(1) span { color: #A06A3B; }
+  .protocol-grid > div:nth-child(4) span { color: #2C7A7B; }
+  .protocol-grid > div:nth-child(5) span { color: #B6583A; }
+  .protocol-grid strong { display: block; margin-top: 15px; color: #C7E7DF; font-family: "Alexandria", sans-serif; font-size: 18px; }
+  .protocol-grid p { margin-top: 8px; color: rgba(255,255,255,.66); font-size: 13px; line-height: 1.55; }
+}
+
+@media (max-width: 767px) {
+  .route-step::after { bottom: -17px; left: auto; right: 50%; top: auto; transform: translateX(50%); }
+  .route-step:not(:last-child)::after { display: block; }
+  .fiber-thread { display: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .route-step, .ledger-row { animation: field-note-enter 420ms cubic-bezier(.23,1,.32,1) both; }
+  .route-step:nth-child(2), .ledger-row:nth-child(2) { animation-delay: 50ms; }
+  .route-step:nth-child(3), .ledger-row:nth-child(3) { animation-delay: 100ms; }
+  .route-step:nth-child(4), .ledger-row:nth-child(4) { animation-delay: 150ms; }
+  @keyframes field-note-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+}
+
+@media (max-width: 1100px) {
+  .trace-ribbon { padding-right: 0; }
+}
+
+@media (max-width: 767px) {
+  .ledger-row { grid-template-columns: 44px 48px 1fr; gap: 12px; padding-left: 10px; }
+  .ledger-row > p, .ledger-output { grid-column: 3; }
+  .ledger-seq { height: 76px; }
+  .protocol-grid { grid-template-columns: 1fr; }
+  .protocol-grid > div { min-height: 0; padding-bottom: 15px; border-left: 0; border-bottom: 1px solid rgba(255,255,255,.13); }
+  .trace-ribbon { justify-content: flex-start; overflow-x: auto; margin-bottom: 16px; }
+  .trace-ribbon > div { min-width: 78px; padding: 7px; font-size: 9px; }
+  .trace-ribbon i { width: 13px; }
+}
