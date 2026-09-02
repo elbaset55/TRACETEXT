@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import {
   CheckCircle2,
   CircleAlert,
+  Home as HomeIcon,
   Play,
   ShieldCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLocation } from "wouter";
 import { ROUTES, STORAGE_KEY, type BatchEntry, type RouteId } from "@/lib/types";
 import { useSettings } from "@/contexts/SettingsContext";
 import QRScanner from "@/components/QRScanner";
@@ -25,12 +27,16 @@ function getToday() {
 
 export default function Home() {
   const { t, lang, user } = useSettings();
+  const [, setLocation] = useLocation();
   const [tab, setTab] = useState<TabId>("register");
 
   const [batchId, setBatchId] = useState("");
   const [sourceType, setSourceType] = useState("");
   const [sourceOther, setSourceOther] = useState("");
-  const [material, setMaterial] = useState(lang === "ar" ? "قطن" : "Cotton");
+  const [sourceSubType, setSourceSubType] = useState("");
+  const [sourceSubOther, setSourceSubOther] = useState("");
+  const [materialType, setMaterialType] = useState("cotton");
+  const [materialOther, setMaterialOther] = useState("");
   const [date, setDate] = useState(getToday());
   const [mass, setMass] = useState("");
   const [route, setRoute] = useState<RouteId>("A");
@@ -40,8 +46,6 @@ export default function Home() {
   const [notice, setNotice] = useState("");
   const [lastEntry, setLastEntry] = useState<BatchEntry | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
-
-  const source = sourceType === "other" ? sourceOther.trim() : sourceType;
 
   useEffect(() => {
     try {
@@ -65,18 +69,59 @@ export default function Home() {
   const ro = (r: (typeof ROUTES)[number]) => (lang === "ar" ? r.outcome : r.outcomeEn);
 
   const activeRoute = ROUTES.find((r) => r.id === route) ?? ROUTES[0];
-  const valid = Boolean(batchId.trim() && source.trim() && material.trim() && Number(mass) > 0);
 
   const sourceOptions = [
     { value: "applied-arts", label: t("source.appliedArts") },
     { value: "fine-arts", label: t("source.fineArts") },
+    { value: "personal", label: t("source.personal") },
   ];
+
+  const personalSubOptions = [
+    { value: "coat", label: t("source.coat") },
+    { value: "uniform", label: t("source.uniform") },
+  ];
+
+  const source = (() => {
+    if (sourceType === "other") return sourceOther.trim();
+    if (sourceType === "personal") {
+      if (!sourceSubType) return "";
+      if (sourceSubType === "personal-other") return sourceSubOther.trim() ? `${t("source.personal")} — ${sourceSubOther.trim()}` : "";
+      const sub = personalSubOptions.find((o) => o.value === sourceSubType);
+      return sub ? `${t("source.personal")} — ${sub.label}` : "";
+    }
+    const opt = sourceOptions.find((o) => o.value === sourceType);
+    return opt ? opt.label : "";
+  })();
+
+  const materialOptions = [
+    { value: "cotton", label: t("material.cotton") },
+    { value: "wool", label: t("material.wool") },
+    { value: "silk", label: t("material.silk") },
+    { value: "linen", label: t("material.linen") },
+    { value: "polyester", label: t("material.polyester") },
+    { value: "nylon", label: t("material.nylon") },
+    { value: "denim", label: t("material.denim") },
+    { value: "mixed", label: t("material.mixed") },
+    { value: "threads", label: t("material.threads") },
+    { value: "felt", label: t("material.felt") },
+    { value: "fauxLeather", label: t("material.fauxLeather") },
+    { value: "velcro", label: t("material.velcro") },
+  ];
+
+  const material = materialType === "other"
+    ? materialOther.trim()
+    : materialOptions.find((o) => o.value === materialType)?.label ?? "";
+
+  const valid = Boolean(batchId.trim() && source.trim() && material.trim() && Number(mass) > 0);
 
   function resetForm() {
     setBatchId("");
     setSourceType("");
     setSourceOther("");
-    setMaterial(lang === "ar" ? "قطن" : "Cotton");
+    setSourceSubType("");
+    setSourceSubOther("");
+    setMaterialType("cotton");
+    setMaterialOther("");
     setDate(getToday());
     setMass("");
     setRoute("A");
@@ -88,7 +133,10 @@ export default function Home() {
     setBatchId("DEMO-001");
     setSourceType("applied-arts");
     setSourceOther("");
-    setMaterial(lang === "ar" ? "قطن" : "Cotton");
+    setSourceSubType("");
+    setSourceSubOther("");
+    setMaterialType("cotton");
+    setMaterialOther("");
     setDate(getToday());
     setMass("0.25");
     setRoute("A");
@@ -128,11 +176,18 @@ export default function Home() {
     <div className="min-h-screen bg-[#F5F2ED] pb-24 text-[#000033]">
       {/* ═══ HEADER ═══ */}
       <header className="sticky top-0 z-30 border-b border-[#000066]/10 bg-white/95 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2.5">
-          <a href="/" aria-label="TRACETEX — الرئيسية" className="flex items-center transition-transform hover:scale-105">
-            <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-16 w-auto" />
-          </a>
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+          <button onClick={() => setLocation("/")} aria-label="TRACETEX — الرئيسية" className="flex items-center transition-transform hover:scale-105">
+            <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-20 w-auto" />
+          </button>
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => setLocation("/")}
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#000066]/12 text-[#000066] transition-colors hover:bg-[#000066]/5"
+              title={t("nav.home")}
+            >
+              <HomeIcon className="h-4 w-4" />
+            </button>
             {user ? (
               <button
                 onClick={() => setTab("profile")}
@@ -176,17 +231,50 @@ export default function Home() {
               </Field>
               <Field label={t("home.source")} required>
                 <select
-                  value={sourceType === "other" ? "other" : sourceType}
-                  onChange={(e) => setSourceType(e.target.value)}
+                  value={sourceType}
+                  onChange={(e) => {
+                    setSourceType(e.target.value);
+                    setSourceSubType("");
+                    setSourceSubOther("");
+                    if (e.target.value !== "other") setSourceOther("");
+                  }}
                   className="trace-input"
                 >
                   <option value="">{t("source.select")}</option>
                   {sourceOptions.map((o) => (
-                    <option key={o.value} value={o.label}>{o.label}</option>
+                    <option key={o.value} value={o.value}>{o.label}</option>
                   ))}
                   <option value="other">{t("source.other")}</option>
                 </select>
               </Field>
+
+              {/* Personal items sub-selector */}
+              {sourceType === "personal" && (
+                <Field label={t("source.personalSub")} required>
+                  <select
+                    value={sourceSubType}
+                    onChange={(e) => setSourceSubType(e.target.value)}
+                    className="trace-input"
+                  >
+                    <option value="">{t("source.select")}</option>
+                    {personalSubOptions.map((o) => (
+                      <option key={o.value} value={o.value}>{o.label}</option>
+                    ))}
+                    <option value="personal-other">{t("source.personalOther")}</option>
+                  </select>
+                </Field>
+              )}
+              {sourceType === "personal" && sourceSubType === "personal-other" && (
+                <Field label={t("source.personalOther")} required>
+                  <input
+                    value={sourceSubOther}
+                    onChange={(e) => setSourceSubOther(e.target.value)}
+                    placeholder={t("source.personalOther")}
+                    className="trace-input"
+                  />
+                </Field>
+              )}
+
               {sourceType === "other" && (
                 <Field label={t("source.otherPlaceholder")} required>
                   <input
@@ -198,8 +286,30 @@ export default function Home() {
                 </Field>
               )}
               <Field label={t("home.material")} required>
-                <input value={material} onChange={(e) => setMaterial(e.target.value)} className="trace-input" />
+                <select
+                  value={materialType}
+                  onChange={(e) => {
+                    setMaterialType(e.target.value);
+                    if (e.target.value !== "other") setMaterialOther("");
+                  }}
+                  className="trace-input"
+                >
+                  {materialOptions.map((o) => (
+                    <option key={o.value} value={o.value}>{o.label}</option>
+                  ))}
+                  <option value="other">{t("material.other")}</option>
+                </select>
               </Field>
+              {materialType === "other" && (
+                <Field label={t("material.otherPlaceholder")} required>
+                  <input
+                    value={materialOther}
+                    onChange={(e) => setMaterialOther(e.target.value)}
+                    placeholder={t("material.otherPlaceholder")}
+                    className="trace-input"
+                  />
+                </Field>
+              )}
               <Field label={t("home.mass")} required>
                 <input value={mass} onChange={(e) => setMass(e.target.value)} inputMode="decimal" placeholder="0.00" className="trace-input font-mono" />
               </Field>

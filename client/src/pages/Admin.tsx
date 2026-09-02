@@ -199,12 +199,12 @@ export default function Admin() {
     <div className="min-h-screen bg-[#F5F2ED] pb-12 text-[#000033]">
       {/* ═══ HEADER ═══ */}
       <header className="sticky top-0 z-40 border-b border-[#000066]/10 bg-white/95 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2.5">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
-            <a href="/" aria-label="TRACETEX — الرئيسية" className="flex items-center transition-transform hover:scale-105">
-              <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-16 w-auto" />
-            </a>
-            <span className="rounded-full bg-[#000066] px-3 py-0.5 text-xs font-bold text-white">{t("nav.admin")}</span>
+            <button onClick={() => setLocation("/")} aria-label="TRACETEX — الرئيسية" className="flex items-center transition-transform hover:scale-105">
+              <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-20 w-auto" />
+            </button>
+            <span className="rounded-full bg-[#000066] px-3 py-1 text-xs font-bold text-white">{t("nav.admin")}</span>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -222,7 +222,7 @@ export default function Admin() {
               <Contrast className="h-4 w-4" />
             </button>
             <Button
-              onClick={() => setLocation("/")}
+              onClick={() => setLocation("/track")}
               variant="ghost"
               className="h-9 rounded-lg px-3 text-sm font-bold text-[#4A5470] hover:bg-[#000066]/5 hover:text-[#000066]"
             >
@@ -234,12 +234,14 @@ export default function Admin() {
       </header>
 
       <div className="mx-auto max-w-6xl px-4 py-6">
-        {/* ═══ TITLE ═══ */}
-        <div className="mb-5">
-          <h1 className="font-display text-3xl font-extrabold tracking-tight text-[#000066]">{t("admin.title")}</h1>
-          <p className="mt-1 text-sm text-[#5A5F7A]">{t("admin.subtitle")}</p>
+        {/* ═══ WELCOME BANNER ═══ */}
+        <div className="relative mb-5 overflow-hidden rounded-2xl bg-gradient-to-l from-[#000066] to-[#000080] p-6 text-white shadow-lg">
+          <div className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-[#66FF00]/10 blur-2xl" />
+          <h1 className="font-display text-3xl font-extrabold tracking-tight">{t("admin.title")}</h1>
+          <p className="mt-1 text-sm text-[#A0A8C8]">{t("admin.subtitle")}</p>
           {user && (
-            <p className="mt-1 text-xs font-bold text-[#000066]">
+            <p className="mt-2 flex items-center gap-2 text-xs font-bold text-[#66FF00]">
+              <ShieldCheck className="h-3.5 w-3.5" />
               {t("profile.welcome")}, {user.name} — {t(`profile.roles.${user.role}`)}
             </p>
           )}
@@ -248,14 +250,12 @@ export default function Admin() {
         {/* ═══ STATS ═══ */}
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {stats.map((s) => (
-            <div key={s.label} className="rounded-2xl border border-[#000066]/8 bg-white p-4 shadow-sm">
-              <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: `${s.color}12`, color: s.color }}>
-                  <s.icon className="h-4 w-4" />
-                </span>
-                <span className="font-display text-2xl font-extrabold text-[#000066]">{s.value}</span>
-              </div>
-              <p className="mt-2 text-xs font-bold text-[#5A5F7A]">{s.label}</p>
+            <div key={s.label} className="group rounded-2xl border border-[#000066]/8 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl transition-transform group-hover:scale-110" style={{ background: `${s.color}14`, color: s.color }}>
+                <s.icon className="h-4 w-4" />
+              </span>
+              <span className="mt-3 block font-display text-2xl font-extrabold text-[#000066]">{s.value}</span>
+              <p className="mt-0.5 text-xs font-bold text-[#5A5F7A]">{s.label}</p>
             </div>
           ))}
         </div>
