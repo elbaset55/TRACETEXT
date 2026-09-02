@@ -161,6 +161,31 @@ const ar: Dict = {
   "footer.admin": "TRACETEX · لوحة الإدارة · جامعة بنها · 2026",
   "footer.trust": "يعتمد التقرير على سجل الفريق الحقيقي",
   "footer.local": "تخزين محلي",
+
+  // Home nav
+  "nav.home": "الرئيسية",
+
+  // Personal items source
+  "source.personal": "متعلقات شخصية",
+  "source.coat": "بالطو / معطف مختبر",
+  "source.uniform": "يونيفورم / زى موحد",
+  "source.personalSub": "نوع المتعلقات",
+  "source.personalOther": "أخرى",
+
+  // Landing page
+  "landing.title": "TRACETEX",
+  "landing.tagline": "من المصدر إلى المصير",
+  "landing.desc": "منصة جامعية لتسجيل وتتبع وتخصيص دفعات قصاصات المنسوجات في جامعة بنها — توثيق، شفافية، وقرارات قابلة للمراجعة.",
+  "landing.start": "ابدأ التتبع",
+  "landing.admin": "لوحة الإدارة",
+  "landing.f1t": "تسجيل فوري",
+  "landing.f1d": "سجّل دفعات القصاصات ببيانات المصدر والخامة والقرار.",
+  "landing.f2t": "QR قابل للمراجعة",
+  "landing.f2d": "كل دفعة لها رمز QR يربطها بالسجل الموثق.",
+  "landing.f3t": "لوحة إدارة",
+  "landing.f3d": "تحليلات وتوزيعات المسارات والمصادر لاتخاذ القرار.",
+  "landing.university": "جامعة بنها",
+  "landing.year": "2026",
 };
 
 const en: Dict = {
@@ -314,6 +339,31 @@ const en: Dict = {
   "footer.admin": "TRACETEX · Admin · Benha University · 2026",
   "footer.trust": "Report relies on real team records",
   "footer.local": "Local Storage",
+
+  // Home nav
+  "nav.home": "Home",
+
+  // Personal items source
+  "source.personal": "Personal Items",
+  "source.coat": "Lab Coat",
+  "source.uniform": "Uniform",
+  "source.personalSub": "Item type",
+  "source.personalOther": "Other",
+
+  // Landing page
+  "landing.title": "TRACETEX",
+  "landing.tagline": "From Source to Destiny",
+  "landing.desc": "A university platform to register, track, and route fabric scrap batches at Benha University — documentation, transparency, and reviewable decisions.",
+  "landing.start": "Start Tracking",
+  "landing.admin": "Admin Dashboard",
+  "landing.f1t": "Instant Registration",
+  "landing.f1d": "Register scrap batches with source, material, and decision data.",
+  "landing.f2t": "Reviewable QR",
+  "landing.f2d": "Every batch gets a QR code linking to its verified record.",
+  "landing.f3t": "Admin Dashboard",
+  "landing.f3d": "Analytics and distributions for routes and sources.",
+  "landing.university": "Benha University",
+  "landing.year": "2026",
 };
 
 const dicts: Record<Lang, Dict> = { ar, en };
