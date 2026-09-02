@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Printer, QrCode } from "lucide-react";
 import { ROUTES, type BatchEntry } from "@/lib/types";
 import { encodeBatch } from "@/lib/qr";
+import { useSettings } from "@/contexts/SettingsContext";
 
 export function QRCodeButton({ entry }: { entry: BatchEntry }) {
   const [open, setOpen] = useState(false);
@@ -31,6 +32,7 @@ function QRCodeDialog({
   open: boolean;
   onClose: () => void;
 }) {
+  const { t, lang } = useSettings();
   const canvasRef = useRef<HTMLDivElement>(null);
   const route = ROUTES.find((r) => r.id === entry.route);
   const qrData = encodeBatch(entry);
@@ -38,10 +40,23 @@ function QRCodeDialog({
   function handlePrint() {
     const canvas = canvasRef.current?.querySelector("canvas");
     const dataUrl = canvas?.toDataURL("image/png") ?? "";
+    const routeTitle = lang === "ar" ? route?.title : route?.titleEn;
+    const L = (k: string) => t(k);
+
+    const rows = [
+      [L("qr.batchId"), entry.id],
+      [L("qr.source"), entry.source],
+      [L("qr.material"), entry.material],
+      [L("qr.date"), entry.date],
+      [L("qr.mass"), `${entry.mass} ${lang === "ar" ? "كجم" : "kg"}`],
+      [L("qr.route"), `${entry.route} — ${routeTitle}`],
+      [L("qr.outcome"), entry.outcome],
+      [L("qr.status"), entry.demo ? (lang === "ar" ? "محاكاة" : "Demo") : (lang === "ar" ? "ميداني" : "Field")],
+    ];
 
     const win = window.open("", "_blank", "width=420,height=620");
     if (!win) return;
-    win.document.write(`<!doctype html><html dir="rtl"><head><meta charset="utf-8"><title>QR — ${entry.id}</title>
+    win.document.write(`<!doctype html><html dir="${lang === "ar" ? "rtl" : "ltr"}"><head><meta charset="utf-8"><title>QR — ${entry.id}</title>
     <style>
       *{margin:0;padding:0;box-sizing:border-box}
       body{font-family:"Alexandria",system-ui,sans-serif;padding:32px;color:#000033}
@@ -57,24 +72,19 @@ function QRCodeDialog({
       .footer{margin-top:24px;padding-top:12px;border-top:1px solid #eee;text-align:center;font-size:10px;color:#9CA0B8}
     </style></head><body>
     <div class="logo">TRACETEX</div>
-    <div class="sub">جامعة بنها · إيصال دفعة قصاصات</div>
+    <div class="sub">${t("qr.receipt")}</div>
     <div class="qr">${dataUrl ? `<img src="${dataUrl}" />` : ""}</div>
     <table>
-      <tr><td>رقم الدفعة</td><td>${entry.id}</td></tr>
-      <tr><td>المصدر</td><td>${entry.source}</td></tr>
-      <tr><td>الخامة</td><td>${entry.material}</td></tr>
-      <tr><td>التاريخ</td><td>${entry.date}</td></tr>
-      <tr><td>الكتلة</td><td>${entry.mass} كجم</td></tr>
-      <tr><td>المسار</td><td><span class="route-badge" style="background:${route?.color}">${entry.route} — ${route?.title ?? ""}</span></td></tr>
-      <tr><td>المصير</td><td>${entry.outcome}</td></tr>
-      <tr><td>الحالة</td><td>${entry.demo ? "محاكاة" : "ميداني"}</td></tr>
+      ${rows.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("")}
     </table>
-    <div class="footer">امسح QR Code لعرض تفاصيل الدفعة · TRACETEX 2026</div>
+    <div class="footer">${t("qr.scanHint")}</div>
     </body></html>`);
     win.document.close();
     win.focus();
     setTimeout(() => win.print(), 300);
   }
+
+  const routeTitle = lang === "ar" ? route?.title : route?.titleEn;
 
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
@@ -89,13 +99,13 @@ function QRCodeDialog({
             <QRCodeCanvas value={qrData} size={200} level="M" includeMargin={false} />
           </div>
           <div className="w-full space-y-1.5 rounded-xl bg-[#F5F2ED] p-3 text-sm">
-            <InfoRow label="المصدر" value={entry.source} />
-            <InfoRow label="الخامة" value={entry.material} />
-            <InfoRow label="الكتلة" value={`${entry.mass} كجم`} />
-            <InfoRow label="المسار" value={`${entry.route} — ${route?.title ?? ""}`} />
+            <InfoRow label={t("qr.source")} value={entry.source} />
+            <InfoRow label={t("qr.material")} value={entry.material} />
+            <InfoRow label={t("qr.mass")} value={`${entry.mass} kg`} />
+            <InfoRow label={t("qr.route")} value={`${entry.route} — ${routeTitle ?? ""}`} />
           </div>
           <Button onClick={handlePrint} className="h-11 w-full rounded-xl bg-[#000066] font-bold text-white hover:bg-[#00004d]">
-            <Printer className="ml-2 h-4 w-4" /> طباعة QR Code
+            <Printer className="ml-2 h-4 w-4" /> {t("qr.print")}
           </Button>
         </div>
       </DialogContent>
@@ -111,5 +121,3 @@ function InfoRow({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
-
-
