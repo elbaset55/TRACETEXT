@@ -172,6 +172,22 @@ const ar: Dict = {
   "source.personalSub": "نوع المتعلقات",
   "source.personalOther": "أخرى",
 
+  // Material types
+  "material.cotton": "قطن",
+  "material.wool": "صوف",
+  "material.silk": "حرير",
+  "material.linen": "كتان",
+  "material.polyester": "بوليستر",
+  "material.nylon": "نايلون",
+  "material.denim": "دنيم",
+  "material.mixed": "أقمشة مختلطة",
+  "material.threads": "خيوط / غزل",
+  "material.felt": "لباد",
+  "material.fauxLeather": "جلد صناعي",
+  "material.velcro": "فيلكرو",
+  "material.other": "أخرى",
+  "material.otherPlaceholder": "اكتب اسم الخامة",
+
   // Landing page
   "landing.title": "TRACETEX",
   "landing.tagline": "من المصدر إلى المصير",
@@ -349,6 +365,22 @@ const en: Dict = {
   "source.uniform": "Uniform",
   "source.personalSub": "Item type",
   "source.personalOther": "Other",
+
+  // Material types
+  "material.cotton": "Cotton",
+  "material.wool": "Wool",
+  "material.silk": "Silk",
+  "material.linen": "Linen",
+  "material.polyester": "Polyester",
+  "material.nylon": "Nylon",
+  "material.denim": "Denim",
+  "material.mixed": "Mixed Fabrics",
+  "material.threads": "Threads / Yarn",
+  "material.felt": "Felt",
+  "material.fauxLeather": "Faux Leather",
+  "material.velcro": "Velcro",
+  "material.other": "Other",
+  "material.otherPlaceholder": "Enter material name",
 
   // Landing page
   "landing.title": "TRACETEX",

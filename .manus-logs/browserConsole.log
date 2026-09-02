@@ -228,3 +228,26 @@
 [2026-09-02T22:40:19.169Z] {"timestamp":1788388816662,"level":"DEBUG","args":["[vite] connected."],"stack":null}
 [2026-09-02T22:53:00.011Z] {"timestamp":1788389578567,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
 [2026-09-02T22:53:00.011Z] {"timestamp":1788389578568,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Landing.tsx"],"stack":null}
+[2026-09-02T22:54:55.411Z] {"timestamp":1788389693226,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-09-02T22:54:55.411Z] {"timestamp":1788389694209,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-09-02T22:55:33.821Z] {"timestamp":1788389733116,"level":"DEBUG","args":["[vite]","invalidate /src/contexts/SettingsContext.tsx: Could not Fast Refresh (\"useSettings\" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports"],"stack":null}
+[2026-09-02T22:55:33.821Z] {"timestamp":1788389733116,"level":"DEBUG","args":["[vite]","hot updated: /src/contexts/SettingsContext.tsx"],"stack":null}
+[2026-09-02T22:55:33.821Z] {"timestamp":1788389733116,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T22:55:36.175Z] {"timestamp":1788389734700,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Home.tsx"],"stack":null}
+[2026-09-02T22:55:36.175Z] {"timestamp":1788389734700,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T22:55:36.175Z] {"timestamp":1788389735375,"level":"DEBUG","args":["[vite]","hot updated: /src/App.tsx"],"stack":null}
+[2026-09-02T22:55:36.175Z] {"timestamp":1788389735375,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Admin.tsx"],"stack":null}
+[2026-09-02T22:55:36.175Z] {"timestamp":1788389735376,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Home.tsx"],"stack":null}
+[2026-09-02T22:55:36.175Z] {"timestamp":1788389735376,"level":"DEBUG","args":["[vite]","hot updated: /src/components/QRCodeDisplay.tsx"],"stack":null}
+[2026-09-02T22:55:36.175Z] {"timestamp":1788389735377,"level":"DEBUG","args":["[vite]","hot updated: /src/components/QRScanner.tsx"],"stack":null}
+[2026-09-02T22:55:36.175Z] {"timestamp":1788389735377,"level":"DEBUG","args":["[vite]","hot updated: /src/components/ProfileTab.tsx"],"stack":null}
+[2026-09-02T22:55:36.175Z] {"timestamp":1788389735377,"level":"DEBUG","args":["[vite]","hot updated: /src/components/SettingsTab.tsx"],"stack":null}
+[2026-09-02T22:55:36.175Z] {"timestamp":1788389735377,"level":"DEBUG","args":["[vite]","hot updated: /src/components/RegisterSuccess.tsx"],"stack":null}
+[2026-09-02T22:55:36.175Z] {"timestamp":1788389735377,"level":"DEBUG","args":["[vite]","hot updated: /src/components/BottomNav.tsx"],"stack":null}
+[2026-09-02T22:55:36.175Z] {"timestamp":1788389735377,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Landing.tsx"],"stack":null}
+[2026-09-02T22:55:37.819Z] {"timestamp":1788389736156,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Home.tsx"],"stack":null}
+[2026-09-02T22:55:37.819Z] {"timestamp":1788389736156,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T22:55:39.812Z] {"timestamp":1788389737912,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Home.tsx"],"stack":null}
+[2026-09-02T22:55:39.812Z] {"timestamp":1788389737912,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-09-02T22:55:43.815Z] {"timestamp":1788389742525,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Home.tsx"],"stack":null}
+[2026-09-02T22:55:43.815Z] {"timestamp":1788389742525,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}

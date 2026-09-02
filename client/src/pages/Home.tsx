@@ -35,7 +35,8 @@ export default function Home() {
   const [sourceOther, setSourceOther] = useState("");
   const [sourceSubType, setSourceSubType] = useState("");
   const [sourceSubOther, setSourceSubOther] = useState("");
-  const [material, setMaterial] = useState(lang === "ar" ? "قطن" : "Cotton");
+  const [materialType, setMaterialType] = useState("cotton");
+  const [materialOther, setMaterialOther] = useState("");
   const [date, setDate] = useState(getToday());
   const [mass, setMass] = useState("");
   const [route, setRoute] = useState<RouteId>("A");
@@ -92,6 +93,25 @@ export default function Home() {
     return opt ? opt.label : "";
   })();
 
+  const materialOptions = [
+    { value: "cotton", label: t("material.cotton") },
+    { value: "wool", label: t("material.wool") },
+    { value: "silk", label: t("material.silk") },
+    { value: "linen", label: t("material.linen") },
+    { value: "polyester", label: t("material.polyester") },
+    { value: "nylon", label: t("material.nylon") },
+    { value: "denim", label: t("material.denim") },
+    { value: "mixed", label: t("material.mixed") },
+    { value: "threads", label: t("material.threads") },
+    { value: "felt", label: t("material.felt") },
+    { value: "fauxLeather", label: t("material.fauxLeather") },
+    { value: "velcro", label: t("material.velcro") },
+  ];
+
+  const material = materialType === "other"
+    ? materialOther.trim()
+    : materialOptions.find((o) => o.value === materialType)?.label ?? "";
+
   const valid = Boolean(batchId.trim() && source.trim() && material.trim() && Number(mass) > 0);
 
   function resetForm() {
@@ -100,7 +120,8 @@ export default function Home() {
     setSourceOther("");
     setSourceSubType("");
     setSourceSubOther("");
-    setMaterial(lang === "ar" ? "قطن" : "Cotton");
+    setMaterialType("cotton");
+    setMaterialOther("");
     setDate(getToday());
     setMass("");
     setRoute("A");
@@ -114,7 +135,8 @@ export default function Home() {
     setSourceOther("");
     setSourceSubType("");
     setSourceSubOther("");
-    setMaterial(lang === "ar" ? "قطن" : "Cotton");
+    setMaterialType("cotton");
+    setMaterialOther("");
     setDate(getToday());
     setMass("0.25");
     setRoute("A");
@@ -264,8 +286,30 @@ export default function Home() {
                 </Field>
               )}
               <Field label={t("home.material")} required>
-                <input value={material} onChange={(e) => setMaterial(e.target.value)} className="trace-input" />
+                <select
+                  value={materialType}
+                  onChange={(e) => {
+                    setMaterialType(e.target.value);
+                    if (e.target.value !== "other") setMaterialOther("");
+                  }}
+                  className="trace-input"
+                >
+                  {materialOptions.map((o) => (
+                    <option key={o.value} value={o.value}>{o.label}</option>
+                  ))}
+                  <option value="other">{t("material.other")}</option>
+                </select>
               </Field>
+              {materialType === "other" && (
+                <Field label={t("material.otherPlaceholder")} required>
+                  <input
+                    value={materialOther}
+                    onChange={(e) => setMaterialOther(e.target.value)}
+                    placeholder={t("material.otherPlaceholder")}
+                    className="trace-input"
+                  />
+                </Field>
+              )}
               <Field label={t("home.mass")} required>
                 <input value={mass} onChange={(e) => setMass(e.target.value)} inputMode="decimal" placeholder="0.00" className="trace-input font-mono" />
               </Field>
