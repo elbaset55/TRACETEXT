@@ -6,10 +6,12 @@ import { useEffect, useMemo, useState } from "react";
 import {
   ArrowRight,
   Beaker,
+  Brain,
   Contrast,
   Download,
   FlaskConical,
   Globe,
+  Lightbulb,
   Package,
   Scale,
   Search,
@@ -71,6 +73,71 @@ export default function Admin() {
       pct: totalCount > 0 ? Math.round((items.length / totalCount) * 100) : 0,
     };
   });
+
+  // ── Source distribution ──
+  const sourceStats = useMemo(() => {
+    const map = new Map<string, number>();
+    ledger.forEach((e) => map.set(e.source, (map.get(e.source) ?? 0) + 1));
+    return Array.from(map.entries())
+      .map(([source, count]) => ({ source, count }))
+      .sort((a, b) => b.count - a.count);
+  }, [ledger]);
+  const maxSourceCount = Math.max(1, ...sourceStats.map((s) => s.count));
+
+  // ── Material distribution ──
+  const materialStats = useMemo(() => {
+    const map = new Map<string, number>();
+    ledger.forEach((e) => map.set(e.material, (map.get(e.material) ?? 0) + 1));
+    return Array.from(map.entries())
+      .map(([material, count]) => ({ material, count }))
+      .sort((a, b) => b.count - a.count);
+  }, [ledger]);
+  const maxMaterialCount = Math.max(1, ...materialStats.map((m) => m.count));
+
+  // ── Smart insights ──
+  const insights = useMemo(() => {
+    if (totalCount === 0) return [];
+    const result: { icon: typeof Lightbulb; text: string; color: string }[] = [];
+
+    // Top source
+    if (sourceStats.length > 0) {
+      result.push({
+        icon: Package,
+        text: `${t("admin.insight.topSource")} ${sourceStats[0].source} (${sourceStats[0].count})`,
+        color: "#000066",
+      });
+    }
+
+    // Top material
+    if (materialStats.length > 0) {
+      result.push({
+        icon: Beaker,
+        text: `${t("admin.insight.topMaterial")} ${materialStats[0].material} (${materialStats[0].count})`,
+        color: "#3F7E84",
+      });
+    }
+
+    // Field ratio
+    const fieldRatio = Math.round((fieldCount / totalCount) * 100);
+    result.push({
+      icon: ShieldCheck,
+      text: `${t("admin.insight.fieldRatio")} ${fieldRatio}%`,
+      color: "#1D3A30",
+    });
+
+    // Top route
+    const topRoute = routeStats.slice().sort((a, b) => b.count - a.count)[0];
+    if (topRoute && topRoute.count > 0) {
+      result.push({
+        icon: Lightbulb,
+        text: `${t("admin.insight.topRoute")} ${topRoute.id} — ${rt(topRoute)} (${topRoute.count})`,
+        color: "#A67D55",
+      });
+    }
+
+    return result;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ledger, lang]);
 
   // ── Filtering ──
   const filtered = useMemo(() => {
@@ -134,7 +201,9 @@ export default function Admin() {
       <header className="sticky top-0 z-40 border-b border-[#000066]/10 bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2.5">
           <div className="flex items-center gap-3">
-            <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-11 w-auto" />
+            <a href="/" aria-label="TRACETEX — الرئيسية" className="flex items-center transition-transform hover:scale-105">
+              <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-16 w-auto" />
+            </a>
             <span className="rounded-full bg-[#000066] px-3 py-0.5 text-xs font-bold text-white">{t("nav.admin")}</span>
           </div>
           <div className="flex items-center gap-2">
@@ -191,29 +260,97 @@ export default function Admin() {
           ))}
         </div>
 
-        {/* ═══ ROUTE DISTRIBUTION ═══ */}
-        <div className="mt-5 rounded-2xl border border-[#000066]/8 bg-white p-5 shadow-sm">
-          <h2 className="font-display text-lg font-extrabold text-[#000066]">{t("admin.routeDist")}</h2>
-          <div className="mt-4 space-y-3">
-            {routeStats.map((r) => (
-              <div key={r.id} className="flex items-center gap-3">
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg font-mono text-xs font-bold text-white" style={{ background: r.color }}>{r.id}</span>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-[#3D4566]">{rt(r)}</span>
-                    <span className="font-mono text-[#5A5F7A]">{r.count} — {r.mass.toFixed(2)} kg · {r.pct}%</span>
-                  </div>
-                  <div className="mt-1 h-2.5 overflow-hidden rounded-full bg-[#000066]/5">
-                    <div
-                      className="h-full rounded-full transition-all duration-500"
-                      style={{ width: `${(r.count / maxRouteCount) * 100}%`, background: r.color }}
-                    />
+        {/* ═══ SMART INSIGHTS ═══ */}
+        {insights.length > 0 && (
+          <div className="mt-5 rounded-2xl border border-[#66FF00]/20 bg-gradient-to-l from-[#66FF00]/5 to-white p-5 shadow-sm">
+            <div className="flex items-center gap-2">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#000066] text-white">
+                <Brain className="h-4 w-4" />
+              </span>
+              <h2 className="font-display text-lg font-extrabold text-[#000066]">{t("admin.insights")}</h2>
+            </div>
+            <div className="mt-3 grid gap-2 sm:grid-cols-2">
+              {insights.map((ins, i) => (
+                <div key={i} className="flex items-center gap-2 rounded-xl border border-[#000066]/8 bg-white/80 px-3 py-2.5">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg" style={{ background: `${ins.color}12`, color: ins.color }}>
+                    <ins.icon className="h-3.5 w-3.5" />
+                  </span>
+                  <span className="text-sm font-bold text-[#3D4566]">{ins.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ═══ ROUTE + SOURCE + MATERIAL DISTRIBUTION ═══ */}
+        <div className="mt-5 grid gap-5 lg:grid-cols-2">
+          {/* Route distribution */}
+          <div className="rounded-2xl border border-[#000066]/8 bg-white p-5 shadow-sm">
+            <h2 className="font-display text-lg font-extrabold text-[#000066]">{t("admin.routeDist")}</h2>
+            <div className="mt-4 space-y-3">
+              {routeStats.map((r) => (
+                <div key={r.id} className="flex items-center gap-3">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg font-mono text-xs font-bold text-white" style={{ background: r.color }}>{r.id}</span>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-bold text-[#3D4566]">{rt(r)}</span>
+                      <span className="font-mono text-[#5A5F7A]">{r.count} — {r.mass.toFixed(2)} kg · {r.pct}%</span>
+                    </div>
+                    <div className="mt-1 h-2.5 overflow-hidden rounded-full bg-[#000066]/5">
+                      <div
+                        className="h-full rounded-full transition-all duration-500"
+                        style={{ width: `${(r.count / maxRouteCount) * 100}%`, background: r.color }}
+                      />
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Source distribution */}
+          <div className="rounded-2xl border border-[#000066]/8 bg-white p-5 shadow-sm">
+            <h2 className="font-display text-lg font-extrabold text-[#000066]">{t("admin.sourceDist")}</h2>
+            {sourceStats.length === 0 ? (
+              <p className="mt-4 text-sm text-[#5A5F7A]">{t("admin.noSourceData")}</p>
+            ) : (
+              <div className="mt-4 space-y-3">
+                {sourceStats.map((s, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#000066]/8 font-mono text-xs font-bold text-[#000066]">{i + 1}</span>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="truncate font-bold text-[#3D4566]">{s.source}</span>
+                        <span className="shrink-0 font-mono text-[#5A5F7A]">{s.count}</span>
+                      </div>
+                      <div className="mt-1 h-2.5 overflow-hidden rounded-full bg-[#000066]/5">
+                        <div
+                          className="h-full rounded-full transition-all duration-500"
+                          style={{ width: `${(s.count / maxSourceCount) * 100}%`, background: "#000066" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
         </div>
+
+        {/* Material distribution */}
+        {materialStats.length > 0 && (
+          <div className="mt-5 rounded-2xl border border-[#000066]/8 bg-white p-5 shadow-sm">
+            <h2 className="font-display text-lg font-extrabold text-[#000066]">{t("admin.materialDist")}</h2>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {materialStats.map((m, i) => (
+                <div key={i} className="flex items-center gap-2 rounded-xl border border-[#000066]/8 bg-[#FCFBF8] px-3 py-2">
+                  <span className="text-sm font-bold text-[#000066]">{m.material}</span>
+                  <span className="rounded-full bg-[#000066]/8 px-2 py-0.5 font-mono text-xs font-bold text-[#000066]">{m.count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* ═══ FILTERS + TABLE ═══ */}
         <div className="mt-5 rounded-2xl border border-[#000066]/8 bg-white shadow-sm">

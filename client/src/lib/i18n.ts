@@ -9,6 +9,7 @@ const ar: Dict = {
   "nav.scan": "ماسح QR",
   "nav.profile": "الملف",
   "nav.admin": "الإدارة",
+  "nav.settings": "الإعدادات",
 
   // Home
   "home.title": "لوحة تتبع القصاصات",
@@ -30,6 +31,9 @@ const ar: Dict = {
   "home.demoNotice2": "بيانات محاكاة — لا تستخدمها في تقرير فعلي.",
   "home.registered": "سُجل قرار الدفعة محليًا.",
   "home.registeredDemo": "سُجلت حالة محاكاة في السجل المحلي.",
+  "home.successTitle": "تم تسجيل الدفعة بنجاح",
+  "home.successDone": "تم",
+  "home.successPrintQR": "طباعة QR Code",
   "home.incomplete": "أكمل رمز الدفعة والمصدر والخامة والكتلة قبل التسجيل.",
   "home.cleared": "تم حذف السجل المحلي.",
   "home.readError": "تعذر قراءة السجل المحلي.",
@@ -128,6 +132,30 @@ const ar: Dict = {
   "admin.col.time": "الوقت",
   "admin.col.qr": "QR",
 
+  // Settings
+  "settings.title": "الإعدادات",
+  "settings.language": "اللغة",
+  "settings.accessibility": "إمكانية الوصول",
+  "settings.adminLink": "لوحة الإدارة",
+
+  // Source options
+  "source.select": "اختر المصدر / الورشة",
+  "source.appliedArts": "ورشة كلية الفنون التطبيقية",
+  "source.fineArts": "ورشة كلية الفنون الجميلة",
+  "source.other": "ورشة/معمل كلية أخرى",
+  "source.otherPlaceholder": "اكتب اسم الورشة / المعمل",
+
+  // Admin extras
+  "admin.sourceDist": "توزيع المصادر",
+  "admin.materialDist": "توزيع الخامات",
+  "admin.insights": "رؤى ذكية",
+  "admin.insight.topSource": "أعلى مصدر:",
+  "admin.insight.topMaterial": "أعلى خامة:",
+  "admin.insight.fieldRatio": "نسبة البيانات الميدانية:",
+  "admin.insight.topRoute": "أكثر مسار استخدامًا:",
+  "admin.insight.noData": "لا توجد بيانات كافية للتحليل.",
+  "admin.noSourceData": "لا توجد مصادر مسجلة.",
+
   // Footer
   "footer.text": "TRACETEX · جامعة بنها · 2026",
   "footer.admin": "TRACETEX · لوحة الإدارة · جامعة بنها · 2026",
@@ -141,6 +169,7 @@ const en: Dict = {
   "nav.scan": "QR Scan",
   "nav.profile": "Profile",
   "nav.admin": "Admin",
+  "nav.settings": "Settings",
 
   "home.title": "Scrap Trace Console",
   "home.batchCount": "batches stored locally",
@@ -161,6 +190,9 @@ const en: Dict = {
   "home.demoNotice2": "Simulation data — do not use in a real report.",
   "home.registered": "Batch decision registered locally.",
   "home.registeredDemo": "Simulation case saved to local ledger.",
+  "home.successTitle": "Batch registered successfully",
+  "home.successDone": "Done",
+  "home.successPrintQR": "Print QR Code",
   "home.incomplete": "Complete batch ID, source, material and mass before registering.",
   "home.cleared": "Local ledger cleared.",
   "home.readError": "Could not read local ledger.",
@@ -253,6 +285,30 @@ const en: Dict = {
   "admin.col.status": "Status",
   "admin.col.time": "Time",
   "admin.col.qr": "QR",
+
+  // Settings
+  "settings.title": "Settings",
+  "settings.language": "Language",
+  "settings.accessibility": "Accessibility",
+  "settings.adminLink": "Admin Dashboard",
+
+  // Source options
+  "source.select": "Select source / workshop",
+  "source.appliedArts": "Applied Arts Workshop",
+  "source.fineArts": "Fine Arts Workshop",
+  "source.other": "Other Faculty Workshop/Lab",
+  "source.otherPlaceholder": "Enter workshop / lab name",
+
+  // Admin extras
+  "admin.sourceDist": "Source Distribution",
+  "admin.materialDist": "Material Distribution",
+  "admin.insights": "Smart Insights",
+  "admin.insight.topSource": "Top source:",
+  "admin.insight.topMaterial": "Top material:",
+  "admin.insight.fieldRatio": "Field data ratio:",
+  "admin.insight.topRoute": "Most used route:",
+  "admin.insight.noData": "Not enough data for analysis.",
+  "admin.noSourceData": "No sources registered.",
 
   "footer.text": "TRACETEX · Benha University · 2026",
   "footer.admin": "TRACETEX · Admin · Benha University · 2026",
