@@ -1,18 +1,18 @@
-import { ClipboardList, QrCode, ScanLine, User } from "lucide-react";
+import { FilePlus2, ScanLine, UserRound, Settings2 } from "lucide-react";
 import { useSettings } from "@/contexts/SettingsContext";
 
-export type TabId = "register" | "ledger" | "scan" | "profile";
+export type TabId = "register" | "scan" | "profile" | "settings";
 
-const ICONS: Record<TabId, typeof ClipboardList> = {
-  register: ClipboardList,
-  ledger: QrCode,
+const ICONS: Record<TabId, typeof FilePlus2> = {
+  register: FilePlus2,
   scan: ScanLine,
-  profile: User,
+  profile: UserRound,
+  settings: Settings2,
 };
 
 export default function BottomNav({ active, onChange }: { active: TabId; onChange: (t: TabId) => void }) {
   const { t } = useSettings();
-  const tabs: TabId[] = ["register", "ledger", "scan", "profile"];
+  const tabs: TabId[] = ["register", "scan", "profile", "settings"];
 
   return (
     <nav
@@ -34,7 +34,7 @@ export default function BottomNav({ active, onChange }: { active: TabId; onChang
               <span
                 className={`flex h-9 w-9 items-center justify-center rounded-xl transition-all ${isActive ? "scale-110 bg-[#000066] text-white shadow-md" : "text-[#9CA0B8]"}`}
               >
-                <Icon className="h-4.5 w-4.5" style={{ width: 18, height: 18 }} />
+                <Icon className="h-[18px] w-[18px]" />
               </span>
               <span className={`text-[10px] font-bold ${isActive ? "text-[#000066]" : "text-[#9CA0B8]"}`}>
                 {t(`nav.${tab}`)}

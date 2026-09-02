@@ -10,14 +10,13 @@ import {
   Database,
   Play,
   ShieldCheck,
-  Trash2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ROUTES, STORAGE_KEY, type BatchEntry, type RouteId } from "@/lib/types";
 import { useSettings } from "@/contexts/SettingsContext";
-import { QRCodeButton } from "@/components/QRCodeDisplay";
 import QRScanner from "@/components/QRScanner";
 import ProfileTab from "@/components/ProfileTab";
+import SettingsTab from "@/components/SettingsTab";
 import BottomNav, { type TabId } from "@/components/BottomNav";
 
 function getToday() {
@@ -29,7 +28,8 @@ export default function Home() {
   const [tab, setTab] = useState<TabId>("register");
 
   const [batchId, setBatchId] = useState("");
-  const [source, setSource] = useState("");
+  const [sourceType, setSourceType] = useState("");
+  const [sourceOther, setSourceOther] = useState("");
   const [material, setMaterial] = useState(lang === "ar" ? "قطن" : "Cotton");
   const [date, setDate] = useState(getToday());
   const [mass, setMass] = useState("");
@@ -38,6 +38,8 @@ export default function Home() {
   const [demoMode, setDemoMode] = useState(false);
   const [ledger, setLedger] = useState<BatchEntry[]>([]);
   const [notice, setNotice] = useState("");
+
+  const source = sourceType === "other" ? sourceOther.trim() : sourceType;
 
   useEffect(() => {
     try {
@@ -68,9 +70,15 @@ export default function Home() {
   );
   const totalCount = ledger.length;
 
+  const sourceOptions = [
+    { value: "applied-arts", label: t("source.appliedArts") },
+    { value: "fine-arts", label: t("source.fineArts") },
+  ];
+
   function resetForm() {
     setBatchId("");
-    setSource("");
+    setSourceType("");
+    setSourceOther("");
     setMaterial(lang === "ar" ? "قطن" : "Cotton");
     setDate(getToday());
     setMass("");
@@ -81,7 +89,8 @@ export default function Home() {
 
   function loadDemo() {
     setBatchId("DEMO-001");
-    setSource(lang === "ar" ? "ورشة محاكاة — لا تمثل شريكًا" : "Simulation workshop — not a partner");
+    setSourceType("applied-arts");
+    setSourceOther("");
     setMaterial(lang === "ar" ? "قطن" : "Cotton");
     setDate(getToday());
     setMass("0.25");
@@ -122,7 +131,9 @@ export default function Home() {
       {/* ═══ HEADER ═══ */}
       <header className="sticky top-0 z-30 border-b border-[#000066]/10 bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2.5">
-          <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-11 w-auto" />
+          <a href="/" aria-label="TRACETEX — الرئيسية" className="flex items-center transition-transform hover:scale-105">
+            <img src="/assets/tracetex-logo.png" alt="TRACETEX" className="h-14 w-auto" />
+          </a>
           <div className="flex items-center gap-2">
             {user ? (
               <button
@@ -145,9 +156,6 @@ export default function Home() {
                 <span className="hidden sm:inline">{t("profile.noUser")}</span>
               </button>
             )}
-            <a href="/admin" className="hidden rounded-lg bg-[#000066]/5 px-3 py-1.5 text-xs font-bold text-[#000066] transition-colors hover:bg-[#000066]/10 sm:block">
-              {t("nav.admin")}
-            </a>
           </div>
         </div>
       </header>
@@ -194,8 +202,28 @@ export default function Home() {
                 <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="trace-input" />
               </Field>
               <Field label={t("home.source")} required>
-                <input value={source} onChange={(e) => setSource(e.target.value)} placeholder={t("home.source")} className="trace-input" />
+                <select
+                  value={sourceType === "other" ? "other" : sourceType}
+                  onChange={(e) => setSourceType(e.target.value)}
+                  className="trace-input"
+                >
+                  <option value="">{t("source.select")}</option>
+                  {sourceOptions.map((o) => (
+                    <option key={o.value} value={o.label}>{o.label}</option>
+                  ))}
+                  <option value="other">{t("source.other")}</option>
+                </select>
               </Field>
+              {sourceType === "other" && (
+                <Field label={t("source.otherPlaceholder")} required>
+                  <input
+                    value={sourceOther}
+                    onChange={(e) => setSourceOther(e.target.value)}
+                    placeholder={t("source.otherPlaceholder")}
+                    className="trace-input"
+                  />
+                </Field>
+              )}
               <Field label={t("home.material")} required>
                 <input value={material} onChange={(e) => setMaterial(e.target.value)} className="trace-input" />
               </Field>
@@ -259,64 +287,6 @@ export default function Home() {
           </div>
         )}
 
-        {tab === "ledger" && (
-          <div className="mt-5 rounded-2xl border border-[#000066]/10 bg-white shadow-sm">
-            <div className="flex items-center justify-between border-b border-[#000066]/8 px-5 py-4">
-              <h2 className="font-display text-xl font-extrabold text-[#000066]">{t("ledger.title")}</h2>
-              <Button onClick={clearLedger} variant="outline" className="h-9 rounded-lg border-[#B85F47]/30 px-3 text-sm text-[#8B3F2D] hover:bg-[#F5E3DC]">
-                <Trash2 className="ml-2 h-3.5 w-3.5" /> {t("ledger.clear")}
-              </Button>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[760px] text-right">
-                <thead>
-                  <tr className="bg-[#000066] text-white">
-                    {["ledger.col.batch", "ledger.col.source", "ledger.col.material", "ledger.col.mass", "ledger.col.route", "ledger.col.outcome", "ledger.col.status", "ledger.col.time", "ledger.col.qr"].map((h) => (
-                      <th key={h} className="px-4 py-3 text-xs font-bold">{t(h)}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {ledger.length === 0 ? (
-                    <tr>
-                      <td colSpan={9} className="px-4 py-10 text-center text-sm text-[#5A5F7A]">
-                        {t("ledger.empty")}
-                      </td>
-                    </tr>
-                  ) : (
-                    ledger.map((e, i) => {
-                      const r = ROUTES.find((rr) => rr.id === e.route);
-                      return (
-                        <tr key={`${e.id}-${i}`} className="border-b border-[#000066]/6 last:border-0 hover:bg-[#F5F2ED]/50">
-                          <td className="px-4 py-3 font-mono text-sm font-bold text-[#000066]">{e.id}</td>
-                          <td className="px-4 py-3 text-sm">{e.source}</td>
-                          <td className="px-4 py-3 text-sm">{e.material}</td>
-                          <td className="px-4 py-3 font-mono text-sm">{e.mass} kg</td>
-                          <td className="px-4 py-3">
-                            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md font-mono text-xs font-bold text-white" style={{ background: r?.color }}>{e.route}</span>
-                          </td>
-                          <td className="px-4 py-3 text-sm text-[#3D4566]">{e.outcome}</td>
-                          <td className="px-4 py-3">
-                            <span className="rounded-full px-2 py-0.5 text-xs font-bold" style={{
-                              background: e.demo ? "rgba(167,125,85,0.12)" : "rgba(0,0,102,0.08)",
-                              color: e.demo ? "#8B6539" : "#000066",
-                            }}>
-                              {e.demo ? t("ledger.simulation") : t("ledger.field")}
-                            </span>
-                          </td>
-                          <td className="px-4 py-3 font-mono text-xs text-[#5A5F7A]">{e.createdAt}</td>
-                          <td className="px-4 py-3"><QRCodeButton entry={e} /></td>
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
         {tab === "scan" && (
           <div className="mt-5">
             <QRScanner />
@@ -325,7 +295,13 @@ export default function Home() {
 
         {tab === "profile" && (
           <div className="mt-5">
-            <ProfileTab />
+            <ProfileTab ledger={ledger} clearLedger={clearLedger} />
+          </div>
+        )}
+
+        {tab === "settings" && (
+          <div className="mt-5">
+            <SettingsTab />
           </div>
         )}
       </div>
